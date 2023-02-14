@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,39 +18,52 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    public TableView<Pelicula> tablaPeliculas;
-    public TableColumn <Pelicula, ImageView> colPoster;
-    public TableColumn<Pelicula,String> colTitulo;
-    public TableColumn<Pelicula,Integer> colYear;
 
+
+    public TilePane pane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        colTitulo.setCellValueFactory(new PropertyValueFactory<>("title"));
-        colYear.setCellValueFactory(new PropertyValueFactory<>("year"));
-        colPoster.setCellValueFactory(new PropertyValueFactory<>("imagen"));
+
+        for(Pelicula pelicula : Main.listaPeliculas){
+            ImageView img = pelicula.getImagen();
+            img.setFitHeight(170);
+            img.setFitWidth(100);
+
+            img.setOnMouseClicked(param->{
+
+                FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("DetallePeli.fxml"));
+                DetallePeliController controller =null;
+                Scene scene = null;
+
+                try {
+                    Parent root = fxmlLoader.load();
+                    scene = new Scene(root);
+                    controller = fxmlLoader.getController();
+
+                    controller.setDatos(pelicula);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
 
-        tablaPeliculas.setItems(Main.listaPeliculas);
+                Stage stage = new Stage();
+                stage.setTitle("Titulo de peliculas");
+                stage.setScene(scene);
+                stage.showAndWait();
 
+            });
+
+            this.pane.getChildren().add(img);
+        }
+        
 
     }
 
     public void handlerSelect(MouseEvent mouseEvent) throws IOException {
-        int numeroFila  = tablaPeliculas.getSelectionModel().getSelectedIndex();
-
-        if (numeroFila >= 0) {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("DetallePeli.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            DetallePeliController controlador = fxmlLoader.getController();
-            controlador.setDatos(tablaPeliculas.getSelectionModel().getSelectedItem());
-            Stage st = new Stage();
-            st.setTitle("Detalle de peliculas");
-            st.setScene(scene);
-            st.showAndWait();
-        }
-
+    
 
     }
 }
