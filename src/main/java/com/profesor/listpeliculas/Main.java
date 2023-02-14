@@ -52,6 +52,9 @@ public class Main extends Application {
             MongoCollection<Pelicula> mCollection = mDatabase.getCollection("movies",Pelicula.class);
 
             mCollection.find().limit(10).into(listaPeliculas);
+
+            System.out.println(listaPeliculas.get(0));
+
         } catch (Exception e) {
             System.out.println("ERROR: No se ha podido descargar la información de la base de datos");
         }

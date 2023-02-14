@@ -3,12 +3,19 @@ package com.profesor.listpeliculas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.List;
+
 public class Pelicula {
     private String plot;
     private Integer year;
     private String title;
     private String poster;
     private ImageView imagen = new ImageView();
+    private List<String> genres;
+
+
+
+    private String type;
 
     public ImageView getImagen() {
         try {
@@ -65,13 +72,30 @@ public class Pelicula {
         this.year = year;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    public List<String> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
 
     @Override
     public String toString() {
         return "Pelicula{" +
                 "plot='" + plot + '\'' +
+                ", year=" + year +
                 ", title='" + title + '\'' +
                 ", poster='" + poster + '\'' +
+                ", genres=" + genres +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

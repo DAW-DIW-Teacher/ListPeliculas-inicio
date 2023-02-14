@@ -21,6 +21,8 @@ public class MainController implements Initializable {
     public TableColumn <Pelicula, ImageView> colPoster;
     public TableColumn<Pelicula,String> colTitulo;
     public TableColumn<Pelicula,Integer> colYear;
+    public TableColumn<Pelicula,String> colType;
+    public TableColumn colGenre;
 
 
     @Override
@@ -29,6 +31,7 @@ public class MainController implements Initializable {
         colTitulo.setCellValueFactory(new PropertyValueFactory<>("title"));
         colYear.setCellValueFactory(new PropertyValueFactory<>("year"));
         colPoster.setCellValueFactory(new PropertyValueFactory<>("imagen"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
 
 
         tablaPeliculas.setItems(Main.listaPeliculas);
